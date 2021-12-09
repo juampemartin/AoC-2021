@@ -1,0 +1,12 @@
+{
+  "name": "AoC-2021",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Juan Pedro Martin <juamp_m@hotmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^16.11.12",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
+  }
+}
