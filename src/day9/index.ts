@@ -15,9 +15,7 @@ const seen: boolean[][] = new Array(data.length).fill(0).map((_: number) => {
 		return new Array(data[0].length).fill(false) as boolean[];
 });
 
-const width: number = data[0].length;
-const height: number  = data.length;
-const totalElements: number = width * height;
+const totalElements: number = data[0].length * data.length;
 
 let riskLevel: number = 0
 
@@ -37,9 +35,9 @@ async function recurseMatrix(map: number[][], seen: boolean[][], seenN: number, 
 
 	if (
 		(!(r - 1 >= 0) || map[r][c] < map[r - 1][c]) &&
-		(!(r + 1 < height) || map[r][c] < map[r + 1][c]) &&
+		(!(r + 1 < data.length) || map[r][c] < map[r + 1][c]) &&
 		(!(c - 1 >= 0) || map[r][c] < map[r][c - 1]) &&
-		(!(c + 1 < width) || map[r][c] < map[r][c + 1])
+		(!(c + 1 < data[0].length) || map[r][c] < map[r][c + 1])
 	) {
 		riskLevel += map[r][c] + 1
 	}
@@ -49,7 +47,6 @@ async function recurseMatrix(map: number[][], seen: boolean[][], seenN: number, 
 	let res = false;
 	for (let i  = 0; i < dirs.length; i++) {
 		res = res = await recurseMatrix(map, seen, seenN, r + dirs[i][1], c + dirs[i][2])
-
 		if (res) {
 			break;
 		}
@@ -57,4 +54,9 @@ async function recurseMatrix(map: number[][], seen: boolean[][], seenN: number, 
 	return res;
 }
 
-console.log("Part One:", recurseMatrix(data, seen, 0, 0, 0))
+const partOne = () => {
+	console.log("Risk Level:");
+	return recurseMatrix(data, seen, 0, 0, 0);
+}
+
+partOne();
