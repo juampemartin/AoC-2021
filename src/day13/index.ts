@@ -38,28 +38,73 @@ const baseMap: string[][] = new Array(y).fill('.').map((_: string) => {
 let paper: string[][] = resetMap(baseMap, coordinates);
 
 function partOne(): number {
-	let count = 0;
-	const foldMap = (): string[][] => {
-	const first = [...instructions][0];
+  let count = 0;
+  const foldMap = (): string[][] => {
+    const first = [...instructions][0];
     if (first.has('y') && first.get('y') != undefined) {
-			let number: number | undefined = first.get('y')
-			foldMapByX(paper, Number(number))
+      let number: number | undefined = first.get('y');
+      foldMapByX(paper, Number(number));
     } else {
-			let number: number | undefined = first.get('x')
-			foldMapByY(paper, Number(number))
+      let number: number | undefined = first.get('x');
+      foldMapByY(paper, Number(number));
     }
 
-  return paper;
-	}
+    return paper;
+  };
 
-	let map = foldMap();
+  let map = foldMap();
   for (let r = 0; r < map.length; r++) {
     for (let c = 0; c < map[0].length; c++) {
-			if (map[r][c] === '#') count++;
-		}
-	}
+      if (map[r][c] === '#') count++;
+    }
+  }
 
-	return count;
+  return count;
 }
 
-console.log("Part One: ", partOne())
+function partTwo() {
+  const serialCoordinates: number[][] = [];
+  const foldMap = (): string[][] => {
+    for (let map of instructions) {
+      if (map.has('y') && map.get('y') != undefined) {
+        let number: number | undefined = map.get('y');
+        foldMapByX(paper, Number(number));
+      } else {
+        let number: number | undefined = map.get('x');
+        foldMapByY(paper, Number(number));
+      }
+    }
+    return paper;
+  };
+
+  let serialKey = foldMap();
+  for (let r = 0; r < serialKey.length; r++) {
+    for (let c = 0; c < serialKey[0].length; c++) {
+      if (serialKey[r][c] === '#') {
+        serialCoordinates.push([c, r]);
+      }
+    }
+  }
+
+	let set = new Set(serialCoordinates.map(([x, y]) => `${x}, ${y}`))
+
+  let maxX: number = Math.max(...serialCoordinates.map(x => x[0]));
+  let maxY: number = Math.max(...serialCoordinates.map(x => x[1]));
+
+	for (let j = 0; j <= maxY; j++) {
+		let string = "";
+		for (let i = 0; i <= maxX; i++) {
+			const key = `${i}, ${j}`;
+			if (set.has(key)) {
+				string += "#";
+			} else {
+				string+= ".";
+			}
+		}
+		console.log(string);
+	}
+	return 0;
+}
+
+console.log('Part One: ', partOne());
+console.log('Part Two: ', partTwo());
