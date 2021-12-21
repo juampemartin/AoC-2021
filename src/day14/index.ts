@@ -1,7 +1,7 @@
 import {readFileSync} from 'fs';
 import * as path from 'path';
 
-const content: string = readFileSync(path.join(__dirname, 'input.prod'), {
+const content: string = readFileSync(path.join(__dirname, 'test.prod'), {
   encoding: 'utf-8',
 })
   .toString()
@@ -64,9 +64,10 @@ function makeSteps(step: number): string[] {
   return finalPolymer;
 }
 
-function partOne() {
-	const items = findMostFrequent(makeSteps(10))
+function partOne(step: number) {
+	const items = findMostFrequent(makeSteps(step))
 	const result = Number(items[0][1]) - Number(items[items.length - 1][1]);
 	return result;
 }
-console.log("Part One: ", partOne());
+
+console.log("Part One: ", partOne(10));

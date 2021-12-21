@@ -2,3 +2,7 @@ build
 compile_commands.json
 
 node_modules/
+
+main.dSYM
+main
+target/
